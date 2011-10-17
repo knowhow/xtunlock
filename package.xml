@@ -1,0 +1,50 @@
+<package id="xtunlock"
+         name="xtunlock"
+         developer="vsasa@bring.out.ba"
+         descrip="xtuple xtunlock package"
+         version="1.1.0"
+         updater="2.2.4">
+  <pkgnotes></pkgnotes>
+
+   <prerequisite type="Query" name="Checking if u2 is installed" >
+         <query>SELECT COUNT(*) = 1
+                     FROM pkghead
+                     WHERE pkghead_name = 'u2';
+          </query>
+          <message>
+            bos: Morate prvo instalirati u2 package.
+            eng: Prerequisite: u2 package. 
+          </message>
+   </prerequisite>
+
+  <prerequisite type="Query"
+                name="xTuple/knowhow ERP version">
+    <query>
+      SELECT (SUBSTRING(fetchMetricText('ServerVersion') FOR 1) > '3') 
+          OR (SUBSTRING(fetchMetricText('ServerVersion') FOR 1) = '3'
+          AND SUBSTRING(fetchMetricText('ServerVersion') FROM 3 FOR 1) >= '6');
+    </query>
+    <message>
+		Ova verzija xtunlock radi samo sa knowhow/xTuple ERP verzijom 3.6.0 ili većom.
+    </message>
+  </prerequisite>
+
+  <prerequisite type="license" name="knowhow CPAL license">
+    <message>
+      &lt;p>
+          This file is part of the knowhow ERP, a free and open source
+          Enterprise Resource Planning software suite,
+          Copyright (c) 2010-2011 by bring.out doo Sarajevo.
+          It is licensed to you under the Common Public Attribution License
+          version 1.0, the full text of which (including knowhow-specific Exhibits)
+          is available in the file LICENSE_CPAL_bring.out_knowhow.md located at the
+          root directory of this source code archive.
+          By using this software, you agree to be bound by its terms.
+      &lt;/p>
+    </message>
+  </prerequisite>
+
+  <script file="database/misc/init_package.sql"  order="0" />
+  <script file="database/misc/db_migrate.sql"  order="1" />
+  
+  </package>
